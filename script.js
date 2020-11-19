@@ -17,9 +17,25 @@ scoreP0.textContent = 0;
 scoreP1.textContent = 0;
 diceEl.classList.add('hidden');
 
+const totalScores = [0, 0];
 let currentScore = 0;
+let activePlayer = 0;
 
+// Rolling dice functionality //
+btnRoll.addEventListener('click', function (){
+    const random = Math.floor(Math.random() * 6) +1;
+    console.log(random);
+    diceEl.classList.remove('hidden');
+    diceEl.src = `dice-${random}.png`;
 
+    if (random !== 1){
+        currentScore += random;
+        document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+    } else {
+        // Switch next player //
+
+    }
+});
 
 
 
