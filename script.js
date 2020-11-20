@@ -22,6 +22,7 @@ diceEl.classList.add('hidden');
 const totalScores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+let playing = true;
 
 const switchPlayer = function (){
     // Switch next player after rolling 1//
@@ -35,30 +36,35 @@ const switchPlayer = function (){
 
 // Rolling dice functionality //
 btnRoll.addEventListener('click', function (){
-    const random = Math.floor(Math.random() * 6) +1;
-    console.log(random);
-    diceEl.classList.remove('hidden');
-    diceEl.src = `dice-${random}.png`;
+    if (playing){
+        const random = Math.floor(Math.random() * 6) +1;
+        console.log(random);
+        diceEl.classList.remove('hidden');
+        diceEl.src = `dice-${random}.png`;
 
-    if (random !== 1){
-        currentScore += random;
-        document.getElementById(`current--${activePlayer}`).textContent = currentScore;
-    } else {
-      switchPlayer();
+        if (random !== 1){
+            currentScore += random;
+            document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+        } else {
+            switchPlayer();
+        }
     }
 });
 
 btnHold.addEventListener('click', function (){
-    totalScores[activePlayer] += currentScore;
-    document.getElementById(`score--${activePlayer}`).textContent = totalScores[activePlayer];
+    if (playing) {
+        totalScores[activePlayer] += currentScore;
+        document.getElementById(`score--${activePlayer}`).textContent = totalScores[activePlayer];
 
-    if (totalScores[activePlayer] >= 20){
-        document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
-        document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
-
-
-    } else {
-        switchPlayer();
+        if (totalScores[activePlayer] >= 20) {
+            playing = false;
+            document.querySelector(`.player--${activePlayer}`).classList.add('player--winner');
+            document.querySelector(`.player--${activePlayer}`).classList.remove('player--active');
+            document.querySelector(`#name--${activePlayer}`).textContent = 'WINNER !!!';
+            diceEl.classList.add('hidden');
+        } else {
+            switchPlayer();
+        }
     }
 })
 
