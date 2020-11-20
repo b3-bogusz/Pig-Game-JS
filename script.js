@@ -5,6 +5,8 @@ const scoreP0 = document.getElementById('score--0');
 const scoreP1 = document.getElementById('score--1');
 const current0 = document.getElementById('current--0');
 const current1 = document.getElementById('current--1');
+const player0 = document.querySelector('.player--0');
+const player1 = document.querySelector('.player--1');
 
 const diceEl = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
@@ -32,8 +34,13 @@ btnRoll.addEventListener('click', function (){
         currentScore += random;
         document.getElementById(`current--${activePlayer}`).textContent = currentScore;
     } else {
-        // Switch next player //
-
+        // Switch next player after rolling 1//
+        document.getElementById(`current--${activePlayer}`).textContent = 0;
+        activePlayer = activePlayer === 0 ? 1 : 0;
+        currentScore = 0;
+        current0.textContent = 0;
+        player0.classList.toggle('player--active');
+        player1.classList.toggle('player--active');
     }
 });
 
